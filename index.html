@@ -1,307 +1,366 @@
+/* BASED ON Iteration 2  */
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OVOS User Config</title>
-  <link rel="stylesheet" href="styles.css"> <!-- Link to your external CSS file if you save it separately -->
-<style>
-    /* Set the font for the entire document and increase font size */
-    body {
-        font-family: 'Roboto', sans-serif; /* Use your preferred font here */
-        font-size: 130%;
-        margin: 0;
-        padding: 0;
-        background-color: #fff; /* Set background color to white */
-    }
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Link to your external CSS file if you save it separately -->
+  <style>
+   /* Set the font for the entire document and increase font size */
+   body {
+    font-family: "Roboto", sans-serif; /* Use your preferred font here */
+    font-size: 130%;
+    margin: 0;
+    padding: 0;
+    background-color: #fff; /* Set background color to white */
+   }
 
-    /* Header styling */
-    h1 {
-        background-color: #3498db;
-        color: #fff;
-        padding: 20px;
-        text-align: center;
-        margin-bottom: 20px;
-    }
+   /* Header styling */
+   h1 {
+    background-color: #3498db;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+   }
 
-    /* Styling for fieldset legends */
-    fieldset {
-        margin-bottom: 30px;
-        border-radius: 8px; /* Rounded corners for fieldsets */
-    }
+   /* Styling for fieldset legends */
+   fieldset {
+    margin-bottom: 30px;
+    border-radius: 8px; /* Rounded corners for fieldsets */
+   }
 
-    legend {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        background-color: #f0f0f0;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-weight: bold;
-    }
+   legend {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-weight: bold;
+   }
 
-    label {
-        margin-bottom: 10px;
-        display: block;
-    }
+   label {
+    margin-bottom: 10px;
+    display: block;
+   }
 
-    /* Increase spacing between fields */
-    select,
-    input,
-    checkbox,
-    button {
-        margin-bottom: 15px;
-        font-size: 100%; /* Reset font size for buttons to default */
-        border-radius: 4px; /* Rounded corners for input fields and buttons */
-    }
+   /* Increase spacing between fields */
+   select,
+   input,
+   checkbox,
+   button {
+    margin-bottom: 15px;
+    font-size: 100%; /* Reset font size for buttons to default */
+    border-radius: 4px; /* Rounded corners for input fields and buttons */
+   }
 
-    /* Increase text input field height */
-    input[type="text"],
-    select {
-        height: 40px; /* Adjust the height as needed */
-    }
+   /* Increase text input field height */
+   input[type="text"],
+   select {
+    height: 40px; /* Adjust the height as needed */
+   }
 
-    /* Set maximum width for the form */
-    form {
-        max-width: 55%;
-        margin: 0 auto; /* Center the form horizontally */
-        display: flex; /* Use flexbox to align buttons vertically */
-        flex-direction: column; /* Align buttons in a column */
-    }
+   /* Set maximum width for the form */
+   form {
+    max-width: 55%;
+    margin: 0 auto; /* Center the form horizontally */
+    display: flex; /* Use flexbox to align buttons vertically */
+    flex-direction: column; /* Align buttons in a column */
+   }
 
-    /* Styling for copy button */
-    #copyButton {
-        display: none; /* Hide copy button by default */
-        background-color: #4caf50;
-        color: #fff;
-        padding: 10px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        max-width: 25%;
-    }
+   /* Styling for copy button */
+   #copyButton,
+   #copyRequirementsButton {
+    display: none; /* Hide copy buttons by default */
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    max-width: 25%;
+    margin-top: 10px; /* Add margin to separate the buttons */
+   }
 
-    #copyButton:hover {
-        background-color: #45a049;
-    }
+   #copyButton:hover,
+   #copyRequirementsButton:hover {
+    background-color: #45a049;
+   }
 
+   /* Increase the size of checkboxes and make the outline thicker */
+   input[type="checkbox"] {
+    width: 20px; /* Adjust width as needed */
+    height: 20px; /* Adjust height as needed */
+    border: 10px solid #3498db; /* Adjust thickness and color as needed */
+   }
 
-    /* Increase the size of checkboxes and make the outline thicker */
-    input[type="checkbox"] {
-        width: 20px; /* Adjust width as needed */
-        height: 20px; /* Adjust height as needed */
-        border: 10px solid #3498db; /* Adjust thickness and color as needed */
-    }
+   #jsonOutput,
+   #requirements {
+    width: 100%;
+    height: 200px; /* Adjust height as needed */
+    resize: vertical; /* Allow vertical resizing */
+    font-family: "Consolas", monospace; /* Use Courier New or preferred monospaced font */
+    font-size: 20px; /* Adjust font size as needed */
+   }
+  </style>
+ </head>
+ <body>
+  <h1>OVOS User Config settings</h1>
 
-    #jsonOutput {
-        width: 100%;
-        height: 200px; /* Adjust height as needed */
-        resize: vertical; /* Allow vertical resizing */
-        font-family: 'Consolas', monospace; /* Use Courier New or preferred monospaced font */
-        font-size: 20px; /* Adjust font size as needed */
-    }
-
-</style>
-</head>
-<body>
-
-<h1>OVOS User Config settings</h1>
-
-<form id="myForm">
-  <label for="log_level">Log Level: </label>
-  <select id="log_level" name="log_level">
+  <form id="myForm">
+   <label for="log_level">Log Level: </label>
+   <select id="log_level" name="log_level">
     <option value="INFO">INFO</option>
     <option value="DEBUG">DEBUG</option>
-  </select>
+   </select>
 
-  <label for="play_wav_cmdline">Play WAV Cmdline: </label>
-  <select id="play_wav_cmdline" name="play_wav_cmdline">
+   <label for="play_wav_cmdline">Play WAV Cmdline: </label>
+   <select id="play_wav_cmdline" name="play_wav_cmdline">
     <option value="pw-play">pw-play</option>
     <option value="aplay">aplay</option>
     <option value="paplay">paplay</option>
-  </select>
+   </select>
 
-  <label for="play_mp3_cmdline">Play MP3 Cmdline: </label>
-  <select id="play_mp3_cmdline" name="play_mp3_cmdline">
+   <label for="play_mp3_cmdline">Play MP3 Cmdline: </label>
+   <select id="play_mp3_cmdline" name="play_mp3_cmdline">
     <option value="pw-play">pw-play</option>
     <option value="aplay">aplay</option>
     <option value="paplay">paplay</option>
-  </select>
+   </select>
 
-  <label for="lang">Language: </label>
-  <select id="lang" name="lang">
+   <label for="lang">Language: </label>
+   <select id="lang" name="lang">
     <option value="en-us">en-us</option>
     <option value="nl-nl">nl-nl</option>
     <option value="de-de">de-de</option>
     <option value="fr-fr">fr-fr</option>
-  </select>
+   </select>
 
-  <fieldset>
+   <fieldset>
     <legend>Listener Settings</legend>
-    <label for="listener_remove_silence">Remove Silence: </label><input type="checkbox" id="listener_remove_silence" name="listener_remove_silence" value="True">
+    <label for="listener_remove_silence">Remove Silence: </label><input type="checkbox" id="listener_remove_silence" name="listener_remove_silence" value="True" />
 
     <fieldset>
-      <legend>Speech Recognition</legend>
-      <label for="listener_VAD_module">VAD Module: </label><input type="text" id="listener_VAD_module" name="listener_VAD_module" value="ovos-vad-plugin-silero">
+     <legend>Speech Recognition</legend>
+     <label for="listener_VAD_module">VAD Module: </label><input type="text" id="listener_VAD_module" name="listener_VAD_module" value="ovos-vad-plugin-silero" />
     </fieldset>
 
-    <label for="listener_instant_listen">Instant Listen: </label><input type="checkbox" id="listener_instant_listen" name="listener_instant_listen" value="True">
-  </fieldset>
+    <label for="listener_instant_listen">Instant Listen: </label><input type="checkbox" id="listener_instant_listen" name="listener_instant_listen" value="True" />
+   </fieldset>
 
-  <fieldset>
+   <fieldset>
     <legend>Gui Settings</legend>
-    <label for="gui_extension">Gui Extension: </label><input type="text" id="gui_extension" name="gui_extension" value="ovos-gui-plugin-shell-companion">
-  </fieldset>
+    <label for="gui_extension">Gui Extension: </label><input type="text" id="gui_extension" name="gui_extension" value="ovos-gui-plugin-shell-companion" />
+   </fieldset>
 
-  <fieldset>
+   <fieldset>
     <legend>Websocket Settings</legend>
     <label for="websocket_max_msg_size">Max Message Size: </label>
     <select id="websocket_max_msg_size" name="websocket_max_msg_size">
-      <option value="25" selected>25</option>
-      <option value="50">50</option>
-      <option value="100">100</option>
+     <option value="25" selected>25</option>
+     <option value="50">50</option>
+     <option value="100">100</option>
     </select>
-  </fieldset>
+   </fieldset>
 
-  <fieldset>
+   <fieldset>
     <legend>Tts Settings</legend>
 
     <fieldset>
-      <legend>Tts Module</legend>
-      <label for="tts_module">Module: </label>
-      <select id="tts_module" name="tts_module" onchange="updateVoiceDropdown()">
-        <option value="ovos-tts-server">ovos-tts-server</option>
-        <option value="ovos-tts-plugin-edge-tts">ovos-tts-plugin-edge-tts</option>
-        <!-- Add more options as needed -->
-      </select>
+     <legend>Tts Module</legend>
+     <label for="tts_module">Module: </label>
+     <select id="tts_module" name="tts_module" onchange="updateVoiceDropdown()">
+      <option value="ovos-tts-server">ovos-tts-server</option>
+      <option value="ovos-tts-plugin-edge-tts">ovos-tts-plugin-edge-tts</option>
+      <!-- Add more options as needed -->
+     </select>
 
-      <fieldset>
-        <legend>Voice</legend>
-        <label for="tts_module_voice">Voice: </label>
-        <select id="tts_module_voice" name="tts_module_voice">
-          <!-- Options will be populated dynamically based on the selected module -->
-        </select>
-      </fieldset>
+     <fieldset>
+      <legend>Voice</legend>
+      <label for="tts_module_voice">Voice: </label>
+      <select id="tts_module_voice" name="tts_module_voice">
+       <!-- Options will be populated dynamically based on the selected module -->
+      </select>
+     </fieldset>
     </fieldset>
 
-    <div id="sentenceTokenizeField" style="display: none;">
-      <label for="tts_sentence_tokenize">Sentence Tokenize: </label><input type="checkbox" id="tts_sentence_tokenize" name="tts_sentence_tokenize" value="True">
-    </div>
-  </fieldset>
+    <div id="sentenceTokenizeField" style="display: none;"><label for="tts_sentence_tokenize">Sentence Tokenize: </label><input type="checkbox" id="tts_sentence_tokenize" name="tts_sentence_tokenize" value="True" /></div>
+   </fieldset>
 
-  
-  <!-- Copy button -->
-  <button id="copyButton" onclick="copyToClipboard()">Copy JSON</button>
+   <br />
+   <h2><label for="jsonOutput">JSON Preview:</label></h2>
+   <textarea id="jsonOutput" rows="10" cols="50" readonly></textarea>
+   <br />
+   <!-- Copy button -->
+   <button id="copyButton" onclick="copyToClipboard(event)">Copy JSON</button>
 
-  <br>
-  <h2><label for="jsonOutput">JSON Preview:</label></h2>
-  <textarea id="jsonOutput" rows="10" cols="50" readonly></textarea>
-<br>
-<br>
-<br>
-<script>
-    function copyToClipboard() {
-        var jsonOutputTextarea = document.getElementById("jsonOutput");
-        jsonOutputTextarea.select();
-        document.execCommand("copy");
+   <!-- Add the "Requirements" textarea -->
+
+   <h2 id="requirementsHeader"><label for="jsonOutput">Requirements:</label></h2>
+
+   <textarea id="requirements" rows="5" cols="50" readonly></textarea>
+
+   <!-- Copy button for requirements -->
+   <button id="copyRequirementsButton" onclick="copyRequirementsToClipboard(event)">Copy Requirements</button>
+   <br />
+
+   <script>
+    function copyToClipboard(event) {
+     event.preventDefault(); // Prevent the default behavior (e.g., form submission)
+
+     var jsonOutputTextarea = document.getElementById("jsonOutput");
+     jsonOutputTextarea.select();
+     document.execCommand("copy");
+
+     // Do not clear the JSON textarea after copying
+     jsonOutputTextarea.setSelectionRange(0, jsonOutputTextarea.value.length);
+    }
+
+    function copyRequirementsToClipboard(event) {
+     event.preventDefault(); // Prevent the default behavior (e.g., form submission)
+
+     var requirementsTextarea = document.getElementById("requirements");
+     requirementsTextarea.select();
+     document.execCommand("copy");
+
+     // Do not clear the Requirements textarea after copying
+     requirementsTextarea.setSelectionRange(0, requirementsTextarea.value.length);
     }
 
     function updateVoiceDropdown() {
-        var moduleDropdown = document.getElementById("tts_module");
-        var voiceDropdown = document.getElementById("tts_module_voice");
-        var sentenceTokenizeField = document.getElementById("sentenceTokenizeField");
+     var moduleDropdown = document.getElementById("tts_module");
+     var voiceDropdown = document.getElementById("tts_module_voice");
+     var sentenceTokenizeField = document.getElementById("sentenceTokenizeField");
 
-        // Clear existing options
-        voiceDropdown.innerHTML = "";
+     // Clear existing options
+     voiceDropdown.innerHTML = "";
 
-        // Populate voice options based on the selected module
-        if (moduleDropdown.value === "ovos-tts-server") {
-            var voices = ["ryan high", "ryan low"];
-            sentenceTokenizeField.style.display = "block";
-        } else if (moduleDropdown.value === "ovos-tts-plugin-edge-tts") {
-            var voices = ["en-US-AriaNeural", "nl-NL-FennaNeural"];
-            sentenceTokenizeField.style.display = "none";
-        }
+     // Populate voice options based on the selected module
+     if (moduleDropdown.value === "ovos-tts-server") {
+      var voices = ["ryan high", "ryan low"];
+      sentenceTokenizeField.style.display = "block";
+     } else if (moduleDropdown.value === "ovos-tts-plugin-edge-tts") {
+      var voices = ["en-US-AriaNeural", "nl-NL-FennaNeural"];
+      sentenceTokenizeField.style.display = "none";
+     }
 
-        // Add options to the voice dropdown
-        for (var i = 0; i < voices.length; i++) {
-            var option = document.createElement("option");
-            option.value = voices[i];
-            option.text = voices[i];
-            voiceDropdown.add(option);
-        }
+     // Add options to the voice dropdown
+     for (var i = 0; i < voices.length; i++) {
+      var option = document.createElement("option");
+      option.value = voices[i];
+      option.text = voices[i];
+      voiceDropdown.add(option);
+     }
     }
 
     function convertToJSON() {
-        var form = document.getElementById("myForm");
-        var formData = new FormData(form);
-        var json = {};
+     var form = document.getElementById("myForm");
+     var formData = new FormData(form);
+     var json = {};
 
-        formData.forEach(function (value, key) {
-            if (key === "log_level" || key === "play_wav_cmdline" || key === "play_mp3_cmdline" || key === "websocket_max_msg_size") {
-                json[key] = value;
-            } else if (key.includes("_")) {
-                var keys = key.split("_");
-                var currentObj = json;
+     formData.forEach(function (value, key) {
+      if (key === "log_level" || key === "play_wav_cmdline" || key === "play_mp3_cmdline" || key === "websocket_max_msg_size") {
+       json[key] = value;
+      } else if (key.includes("_")) {
+       var keys = key.split("_");
+       var currentObj = json;
 
-                for (var i = 0; i < keys.length - 1; i++) {
-                    if (!(keys[i] in currentObj)) {
-                        currentObj[keys[i]] = {};
-                    }
-                    currentObj = currentObj[keys[i]];
-                }
-
-                currentObj[keys[keys.length - 1]] = value;
-            } else {
-                json[key] = value;
-            }
-        });
-
-        // Include voice option in the JSON structure
-        var moduleValue = form.elements["tts_module"].value;
-        var voiceValue = form.elements["tts_module_voice"].value;
-
-        if (moduleValue === "ovos-tts-server" || moduleValue === "ovos-tts-plugin-edge-tts") {
-            if (!json["tts"]) {
-                json["tts"] = {};
-            }
-            if (!json["tts"][moduleValue]) {
-                json["tts"][moduleValue] = {};
-            }
-            json["tts"][moduleValue]["voice"] = voiceValue;
+       for (var i = 0; i < keys.length - 1; i++) {
+        if (!(keys[i] in currentObj)) {
+         currentObj[keys[i]] = {};
         }
+        currentObj = currentObj[keys[i]];
+       }
 
-        var jsonOutputTextarea = document.getElementById("jsonOutput");
-        jsonOutputTextarea.value = JSON.stringify(json, null, 2);
+       currentObj[keys[keys.length - 1]] = value;
+      } else {
+       json[key] = value;
+      }
+     });
 
-        // Show the copy button after converting to JSON
-        var copyButton = document.getElementById("copyButton");
-        copyButton.style.display = "block";
+     // Include voice option in the JSON structure
+     var moduleValue = form.elements["tts_module"].value;
+     var voiceValue = form.elements["tts_module_voice"].value;
+
+     if (moduleValue === "ovos-tts-server" || moduleValue === "ovos-tts-plugin-edge-tts") {
+      if (!json["tts"]) {
+       json["tts"] = {};
+      }
+      if (!json["tts"][moduleValue]) {
+       json["tts"][moduleValue] = {};
+      }
+      json["tts"][moduleValue]["voice"] = voiceValue;
+     }
+
+     var jsonOutputTextarea = document.getElementById("jsonOutput");
+     jsonOutputTextarea.value = JSON.stringify(json, null, 2);
+
+     // Show the copy button after converting to JSON
+     var copyButton = document.getElementById("copyButton");
+     copyButton.style.display = "block";
+    }
+
+    function updateRequirements() {
+     var requirementsTextarea = document.getElementById("requirements");
+     var moduleDropdown = document.getElementById("tts_module");
+     var copyRequirementsButton = document.getElementById("copyRequirementsButton");
+     var requirementsHeader = document.getElementById("requirementsHeader");
+
+     // Clear existing requirements
+     requirementsTextarea.value = "";
+
+     // Add requirements based on the selected module
+     if (moduleDropdown.value === "ovos-tts-server") {
+      // Add specific requirements for ovos-tts-server
+      requirementsTextarea.value = "Some specific requirements for ovos-tts-server";
+     } else if (moduleDropdown.value === "ovos-tts-plugin-edge-tts") {
+      // Add specific requirements for ovos-tts-plugin-edge-tts
+      requirementsTextarea.value = "pip install git+https://github.com/OpenVoiceOS/ovos-tts-plugin-edge-tts";
+     }
+
+     // Check if there are requirements
+     var hasRequirements = requirementsTextarea.value.trim() !== "";
+
+     // Show/hide the copyRequirementsButton, requirementsTextarea, and requirementsHeader
+     copyRequirementsButton.style.display = hasRequirements ? "block" : "none";
+     requirementsTextarea.style.display = hasRequirements ? "block" : "none";
+     requirementsHeader.style.display = hasRequirements ? "block" : "none";
     }
 
     function updateJSONOnFormChange() {
-        // Add an event listener to each form element
-        var form = document.getElementById("myForm");
-        var jsonOutputTextarea = document.getElementById("jsonOutput");
+     // Add an event listener to each form element
+     var form = document.getElementById("myForm");
 
-        form.addEventListener("input", function () {
-            convertToJSON(); // Update JSON on form change
-        });
+     form.addEventListener("input", function () {
+      convertToJSON(); // Update JSON on form change
+      updateRequirements(); // Update requirements on form change
+     });
 
-        form.addEventListener("change", function () {
-            convertToJSON(); // Update JSON on form change
-        });
+     form.addEventListener("change", function () {
+      convertToJSON(); // Update JSON on form change
+      updateRequirements(); // Update requirements on form change
+     });
 
-        // Initial population of voice dropdown
-        updateVoiceDropdown();
+     // Initial population of voice dropdown
+     updateVoiceDropdown();
+     updateRequirements(); // Initial population of requirements
+
+     // Hide the copyRequirementsButton, requirementsTextarea, and requirementsHeader initially
+     document.getElementById("copyRequirementsButton").style.display = "none";
+     document.getElementById("requirements").style.display = "none";
+     document.getElementById("requirementsHeader").style.display = "none";
     }
 
     // Call the function to set up live updating on form change
     updateJSONOnFormChange();
-</script>
-</form>
-</body>
+
+    // Hide the copyRequirementsButton initially
+    document.getElementById("copyRequirementsButton").style.display = "none";
+   </script>
+  </form>
+ </body>
 </html>
-
-
-
